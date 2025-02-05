@@ -1,0 +1,176 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <script src="ds:/Sys/app.js"></script>
+</head>
+	
+<script>
+    //Called after application is started.
+    function OnStart()
+    {
+        app.ShowPopup( "HTML Rocks!" );
+    }
+</script>
+
+<style>
+	body { background-color: #ffffff; }
+    .hello 
+    { 
+        font-size: 42; 
+        width: 100%;
+        margin-top: 2em;
+        text-align: center;
+        color: blue;
+    }
+    canvas{
+    -webkit-box-shadow: 0 0 4px 2px #7A7A7A;
+box-shadow: 0 0 4px 2px #7A7A7A;
+-webkit-border-radius: 90px 90px 90px 90px;
+border-radius: 90px 90px 90px 90px;
+background: linear-gradient(to bottom,  rgba(76,76,76,1) 0%,rgba(89,89,89,1) 12%,rgba(102,102,102,1) 25%,rgba(71,71,71,1) 39%,rgba(44,44,44,1) 50%,rgba(0,0,0,1) 51%,rgba(17,17,17,1) 60%,rgba(43,43,43,1) 76%,rgba(28,28,28,1) 91%,rgba(19,19,19,1) 100%);
+
+    }
+    #clock{
+    text-align: center;
+    margin-bottom:5px;
+    font-family:Audiowide;
+    text-shadow: 0 0 3px #FFBE3B;
+    }
+</style>
+<script>
+function showTime() {
+    const timeElement = document.getElementById("clock");
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    // Determine AM or PM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    // Convert to 12-hour format
+    hours = hours % 12;
+    hours = hours ? String(hours).padStart(2, '0') : '12'; // the hour '0' should be '12'
+    
+    timeElement.innerHTML = `${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+// Update the clock every second
+//setInterval(showTime, 1000);
+</script>
+<body onload="app.Start();sI = setInterval(drawClock, 100);">
+
+	<div id="clock"> 00:00:00 AM</div>
+	<script>
+
+const drawClock = function() {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
+  showTime();
+}
+
+const drawFace = function(ctx, radius) {
+  var grad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = '#343434';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  grad.addColorStop(0, '#f5ca79');
+  grad.addColorStop(0.5, '#EFB434');
+  grad.addColorStop(1, '#f4c362');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  ctx.fillStyle = '#EFB434';
+  ctx.fill();
+}
+
+const drawNumbers = function(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius*0.15 + "px Audiowide";
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
+
+const drawTime = function(ctx, radius){
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+
+    (minute*Math.PI/(6*60))+
+    (second*Math.PI/(360*60));
+    drawHand(ctx, hour, radius*0.5, radius*0.07);
+    //minute
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    drawHand(ctx, minute, radius*0.8, radius*0.07);
+    // second
+    second=(second*Math.PI/30);
+    drawHand(ctx, second, radius*0.9, radius*0.02);
+}
+
+const drawHand = function (ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+}
+
+</script>
+<script type="text/javascript">
+
+  WebFontConfig = {
+
+    google: { families: [ 'Audiowide::latin', 'Changa+One::latin', 'Playball::latin', 'Bevan::latin', 'Boogaloo::latin', 'Luckiest+Guy::latin', 'Special+Elite::latin', 'Squada+One::latin', 'Fugaz+One::latin', 'Black+Ops+One::latin', 'Cherry+Cream+Soda::latin', 'Limelight::latin', 'PT+Mono::latin', 'Ubuntu+Mono::latin', 'Coda::latin', 'Share::latin', 'Unica+One::latin', 'Carter+One::latin', 'Ceviche+One::latin', 'Freckle+Face::latin', 'Bubblegum+Sans::latin', 'Press+Start+2P::latin', 'Oxygen+Mono::latin', 'Nixie+One::latin', 'Cabin+Sketch::latin', 'Overlock::latin', 'Sansita+One::latin', 'Chelsea+Market::latin', 'Contrail+One::latin', 'Fontdiner+Swanky::latin', 'Corben::latin', 'Fredericka+the+Great::latin', 'Cousine::latin', 'Forum::latin', 'Anonymous+Pro::latin', 'Fira+Mono::latin', 'Racing+Sans+One::latin', 'Pompiere::latin', 'Frijole::latin', 'Londrina+Solid::latin', 'Allan::latin', 'Graduate::latin', 'Lemon::latin', 'Love+Ya+Like+A+Sister::latin', 'Lilita+One::latin', 'Gruppo::latin', 'Cinzel+Decorative::latin', 'Monoton::latin', 'Baumans::latin', 'Slackey::latin', 'Oregano::latin', 'Unkempt::latin', 'Bowlby+One+SC::latin', 'Finger+Paint::latin', 'Cutive+Mono::latin', 'UnifrakturMaguntia::latin', 'Oleo+Script+Swash+Caps::latin', 'Stardos+Stencil::latin', 'Kelly+Slab::latin', 'Crushed::latin', 'VT323::latin', 'Prosto+One::latin', 'Gravitas+One::latin', 'Happy+Monkey::latin', 'Nova+Square::latin', 'Lily+Script+One::latin', 'Concert+One::latin', 'Shojumaru::latin', 'Megrim::latin', 'Simonetta::latin', 'Expletus+Sans::latin', 'Sniglet::latin', 'Yeseva+One::latin', 'Skranji::latin', 'Kranky::latin', 'Salsa::latin', 'Knewave::latin', 'Bowlby+One::latin', 'Averia+Sans+Libre::latin' ] }
+
+  };
+
+  (function() {
+
+    var wf = document.createElement('script');
+
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+
+    wf.type = 'text/javascript';
+
+    wf.async = 'true';
+
+    var s = document.getElementsByTagName('script')[0];
+
+    s.parentNode.insertBefore(wf, s);
+
+  })(); </script>
+  <center>
+<canvas id="canvas" height="180" width="180">
+</center>
+<script>
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90
+</script>
+	
+</body>
+</html>
