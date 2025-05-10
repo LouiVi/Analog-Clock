@@ -8,7 +8,7 @@
     //Called after application is started.
     function OnStart()
     {
-        app.ShowPopup( "HTML Rocks!" );
+        //app.ShowPopup( "HTML Rocks!" );
     }
 </script>
 
@@ -58,7 +58,7 @@ function showTime() {
 // Update the clock every second
 //setInterval(showTime, 1000);
 </script>
-<body onload="app.Start();sI = setInterval(drawClock, 100);">
+<body onload="sI = setInterval(drawClock, 100);">
 
 	<div id="clock"> 00:00:00 AM</div>
 	<script>
